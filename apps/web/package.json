@@ -2,8 +2,13 @@
 	"name": "web",
 	"private": true,
 	"type": "module",
+	"engines": {
+		"node": ">=22 <24"
+	},
 	"scripts": {
+		"predev": "node scripts/check-node.cjs",
 		"dev": "react-router dev",
+		"pretypecheck": "node scripts/check-node.cjs",
 		"typecheck": "react-router typegen && tsc --noEmit"
 	},
 	"dependencies": {
@@ -32,6 +37,7 @@
 		"color2k": "^2.0.3",
 		"date-fns": "^4.1.0",
 		"downshift": "^9.0.9",
+		"hono": "^4.12.16",
 		"html-to-image": "^1.11.13",
 		"isbot": "^5.1.27",
 		"lodash-es": "^4.17.21",
