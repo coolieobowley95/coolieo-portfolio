@@ -81,22 +81,20 @@ export default function ContactFooter() {
             </p>
             <div className="flex items-center gap-6">
               <a
-                href="#"
+                href="https://github.com/coolieobowley95"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-[#9CA3AF] hover:text-white transition-colors"
-              >
-                <Linkedin size={22} />
-              </a>
-              <a
-                href="#"
-                className="text-[#9CA3AF] hover:text-white transition-colors"
+                title="GitHub Profile"
               >
                 <Github size={22} />
               </a>
               <a
-                href="#"
+                href="mailto:coolieobowley95@gmail.com"
                 className="text-[#9CA3AF] hover:text-white transition-colors"
+                title="Send Email"
               >
-                <Twitter size={22} />
+                <Mail size={22} />
               </a>
             </div>
           </div>

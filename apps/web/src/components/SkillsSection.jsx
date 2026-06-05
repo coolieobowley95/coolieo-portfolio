@@ -1,39 +1,55 @@
-import { Code, Layers, Wrench, Lightbulb } from "lucide-react";
+import { Code, Layers, Wrench, Brain, Zap } from "lucide-react";
 
 export default function SkillsSection() {
   const skillCategories = [
     {
       icon: Code,
-      title: "Programming & Development",
+      title: "Programming Languages",
       color: "#6366F1",
       bgColor: "#EEF2FF",
-      skills: ["C", "C++", "C#", "Java", "Python", "HTML"],
+      skills: ["Python", "Java", "C", "C++", "C#", "JavaScript", "HTML", "CSS"],
     },
     {
       icon: Layers,
-      title: "Web & Software Concepts",
+      title: "Frameworks & Tools",
       color: "#8B5CF6",
       bgColor: "#F5F3FF",
       skills: [
-        "Web Development",
-        "Software Engineering Principles",
-        "Object-Oriented Programming",
-        "Data Structures & Algorithms",
+        "React",
+        "Vite",
+        "Node.js",
+        "Express",
+        "Flask",
+        "Prisma",
+        "Git",
+        "GitHub",
+      ],
+    },
+    {
+      icon: Brain,
+      title: "AI & Data",
+      color: "#F59E0B",
+      bgColor: "#FEF3C7",
+      skills: [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Prompt Engineering",
+        "Data Analytics",
       ],
     },
     {
       icon: Wrench,
-      title: "Tools & Productivity",
-      color: "#3B82F6",
-      bgColor: "#EFF6FF",
-      skills: ["Microsoft Word", "Microsoft Excel", "Microsoft PowerPoint"],
-    },
-    {
-      icon: Lightbulb,
-      title: "Additional Technical Skills",
-      color: "#06B6D4",
-      bgColor: "#ECFEFF",
-      skills: ["Small appliance repair", "Basic technical maintenance"],
+      title: "Computer Science",
+      color: "#10B981",
+      bgColor: "#ECFDF5",
+      skills: [
+        "Data Structures",
+        "Algorithms",
+        "Networking",
+        "Cybersecurity",
+        "Operating Systems",
+        "Software Engineering",
+      ],
     },
   ];
 

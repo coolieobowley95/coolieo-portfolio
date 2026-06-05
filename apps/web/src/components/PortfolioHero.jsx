@@ -7,6 +7,7 @@ import {
   MapPin,
   Mail,
   Phone,
+  Github,
 } from "lucide-react";
 
 export default function PortfolioHero() {
@@ -60,7 +61,11 @@ export default function PortfolioHero() {
               Final-Year Computer Science Student
               <br />
               <span className="text-[#6366F1]">
-                Aspiring Software & Web Developer
+                Full-Stack Developer
+              </span>
+              <br />
+              <span className="text-[#6366F1]">
+                AI & Software Engineering Enthusiast
               </span>
             </p>
           </div>
@@ -123,22 +128,32 @@ export default function PortfolioHero() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
+            <button
+              onClick={() => scrollToSection("#projects")}
+              className="group bg-[#6366F1] hover:bg-[#4F46E5] text-white font-semibold text-[15px] px-8 py-4 rounded-full transition-all duration-200 hover:shadow-lg hover:shadow-[#6366F1]/30 flex items-center gap-2"
+              style={{ fontFamily: "Poppins, sans-serif" }}
+            >
+              <Briefcase size={18} />
+              View Projects
+            </button>
+            <a
+              href="https://github.com/coolieobowley95"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-[#1F2937] hover:bg-[#111827] text-white font-semibold text-[15px] px-8 py-4 rounded-full transition-all duration-200 hover:shadow-lg hover:shadow-[#1F2937]/30 flex items-center gap-2"
+              style={{ fontFamily: "Poppins, sans-serif" }}
+            >
+              <Github size={18} />
+              GitHub Profile
+            </a>
             <button
               onClick={() => scrollToSection("#contact")}
-              className="group bg-[#6366F1] hover:bg-[#4F46E5] text-white font-semibold text-[15px] px-8 py-4 rounded-full transition-all duration-200 hover:shadow-lg hover:shadow-[#6366F1]/30 flex items-center gap-2 min-w-[200px] justify-center"
+              className="group bg-white hover:bg-gray-50 text-[#1F2937] border-2 border-[#E5E7EB] hover:border-[#6366F1] font-semibold text-[15px] px-8 py-4 rounded-full transition-all duration-200 hover:shadow-lg flex items-center gap-2"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
               <MessageCircle size={18} />
               Contact Me
-            </button>
-            <button
-              onClick={() => window.print()}
-              className="group bg-white hover:bg-gray-50 text-[#1F2937] border-2 border-[#E5E7EB] hover:border-[#6366F1] font-semibold text-[15px] px-8 py-4 rounded-full transition-all duration-200 hover:shadow-lg flex items-center gap-2 min-w-[200px] justify-center"
-              style={{ fontFamily: "Poppins, sans-serif" }}
-            >
-              <Download size={18} />
-              Download CV
             </button>
           </div>
         </div>

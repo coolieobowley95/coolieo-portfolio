@@ -2,6 +2,8 @@ import PortfolioHeader from "@/components/PortfolioHeader";
 import PortfolioHero from "@/components/PortfolioHero";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
+import FeaturedProjects from "@/components/FeaturedProjects";
+import AcademicProjects from "@/components/AcademicProjects";
 import EducationSection from "@/components/EducationSection";
 import ExperienceAwardsSection from "@/components/ExperienceAwardsSection";
 import ContactFooter from "@/components/ContactFooter";
@@ -20,6 +22,12 @@ export default function HomePage() {
 
       {/* Technical Skills Section */}
       <SkillsSection />
+
+      {/* Featured Projects Section */}
+      <FeaturedProjects />
+
+      {/* Academic Projects Section */}
+      <AcademicProjects />
 
       {/* Education Section with University, CSEC, and CAPE */}
       <EducationSection />

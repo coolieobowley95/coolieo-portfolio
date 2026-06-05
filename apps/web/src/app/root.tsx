@@ -439,6 +439,23 @@ export function Layout({ children }: { children: ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Final-Year Computer Science Student at the University of Technology, Jamaica. Full-Stack Developer, AI Enthusiast, and Software Engineering Student showcasing projects, research, and technical expertise." />
+        <meta name="keywords" content="portfolio, software developer, full-stack developer, AI, machine learning, computer science, Jamaica, projects" />
+        <meta name="author" content="Coolieo Giovanni Bowley" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://coolieo-portfolio.vercel.app" />
+        <meta property="og:title" content="Coolieo Giovanni Bowley | Full-Stack Developer Portfolio" />
+        <meta property="og:description" content="Final-Year Computer Science Student at the University of Technology, Jamaica. Full-Stack Developer, AI Enthusiast, and Software Engineering Student showcasing projects, research, and technical expertise." />
+        <meta property="og:image" content="https://coolieo-portfolio.vercel.app/og-image.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://coolieo-portfolio.vercel.app" />
+        <meta name="twitter:title" content="Coolieo Giovanni Bowley | Full-Stack Developer Portfolio" />
+        <meta name="twitter:description" content="Final-Year Computer Science Student. Full-Stack Developer & AI Enthusiast. View my projects and expertise." />
+        <meta name="twitter:image" content="https://coolieo-portfolio.vercel.app/og-image.png" />
+        <meta name="theme-color" content="#6366F1" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://coolieo-portfolio.vercel.app" />
+        <title>Coolieo Giovanni Bowley | Full-Stack Developer Portfolio</title>
         <Meta />
         <Links />
         <script type="module" src="/src/__create/dev-error-overlay.js"></script>
