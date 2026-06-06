@@ -20,7 +20,7 @@ export default defineConfig({
   },
   ssr: {
     target: 'node',
-    noExternal: ['argon2'],
+    external: ['argon2'],
   },
   optimizeDeps: {
     include: ['fast-glob', 'lucide-react'],
