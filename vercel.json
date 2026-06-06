@@ -2,5 +2,15 @@
   "buildCommand": "npm install --legacy-peer-deps --prefix apps/web && npm run build --prefix apps/web",
   "outputDirectory": "apps/web/build/client",
   "installCommand": "npm install --legacy-peer-deps --prefix apps/web",
-  "framework": null
+  "framework": null,
+  "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
