@@ -16,7 +16,14 @@ if (globalThis.fetch) {
 
 // Recursively find all route.js files
 async function findRouteFiles(dir: string): Promise<string[]> {
-  const files = await readdir(dir);
+  let files: string[];
+  try {
+    files = await readdir(dir);
+  } catch (error) {
+    // Directory doesn't exist (e.g. in production build), return empty
+    return [];
+  }
+
   let routes: string[] = [];
 
   for (const file of files) {
@@ -27,9 +34,8 @@ async function findRouteFiles(dir: string): Promise<string[]> {
       if (statResult.isDirectory()) {
         routes = routes.concat(await findRouteFiles(filePath));
       } else if (file === 'route.js') {
-        // Handle root route.js specially
         if (filePath === join(__dirname, 'route.js')) {
-          routes.unshift(filePath); // Add to beginning of array
+          routes.unshift(filePath);
         } else {
           routes.push(filePath);
         }
@@ -46,7 +52,7 @@ async function findRouteFiles(dir: string): Promise<string[]> {
 function getHonoPath(routeFile: string): { name: string; pattern: string }[] {
   const relativePath = relative(__dirname, routeFile);
   const parts = relativePath.split(sep).filter(Boolean);
-  const routeParts = parts.slice(0, -1); // Remove 'route.js'
+  const routeParts = parts.slice(0, -1);
   if (routeParts.length === 0) {
     return [{ name: 'root', pattern: '' }];
   }
@@ -82,7 +88,6 @@ async function registerRoutes() {
       return b.length - a.length;
     });
 
-  // Clear existing routes
   api.routes = [];
 
   for (const routeFile of routeFiles) {
@@ -139,10 +144,8 @@ async function registerRoutes() {
   }
 }
 
-// Initial route registration
 await registerRoutes();
 
-// Hot reload routes in development
 if (import.meta.env.DEV) {
   import.meta.glob('../src/app/api/**/route.js', {
     eager: true,
