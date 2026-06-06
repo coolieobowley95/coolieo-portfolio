@@ -1,9 +1,11 @@
 {
   "buildCommand": "npm install --legacy-peer-deps --prefix apps/web && npm run build --prefix apps/web",
-  "outputDirectory": "apps/web/build/client",
+  "outputDirectory": "apps/web/build",
   "installCommand": "npm install --legacy-peer-deps --prefix apps/web",
   "framework": null,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  "functions": {
+    "apps/web/build/server/index.js": {
+      "runtime": "nodejs20.x"
+    }
+  }
 }
