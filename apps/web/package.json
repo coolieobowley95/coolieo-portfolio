@@ -8,6 +8,7 @@
 	"scripts": {
 		"predev": "node scripts/check-node.cjs",
 		"dev": "react-router dev",
+		"build": "react-router build",
 		"pretypecheck": "node scripts/check-node.cjs",
 		"typecheck": "react-router typegen && tsc --noEmit"
 	},
