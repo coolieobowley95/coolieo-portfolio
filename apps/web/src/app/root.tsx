@@ -44,12 +44,9 @@ if (globalThis.window && globalThis.window !== undefined) {
 const LoadFontsSSR = import.meta.env.SSR ? LoadFonts : null;
 if (import.meta.hot) {
   import.meta.hot.on('update-font-links', (urls: string[]) => {
-    // remove old font links
     for (const link of document.querySelectorAll('link[data-auto-font]')) {
       link.remove();
     }
-
-    // add new ones
     for (const url of urls) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
@@ -78,20 +75,15 @@ function InternalErrorBoundary({ error: errorArg }: Route.ErrorBoundaryProps) {
   useEffect(() => {
     const serialized = serializeError(error);
     const errorKey = JSON.stringify(serialized);
-
-    // Reset the counter when a genuinely different error arrives
     if (errorKey !== lastErrorKeyRef.current) {
       lastErrorKeyRef.current = errorKey;
       postCountRef.current = 0;
     }
-
     if (postCountRef.current >= MAX_ERROR_POSTS_PER_ERROR) {
       return;
     }
-
     const now = Date.now();
     const timeSinceLastPost = now - lastPostTimeRef.current;
-
     const post = () => {
       if (postCountRef.current >= MAX_ERROR_POSTS_PER_ERROR) {
         return;
@@ -100,12 +92,10 @@ function InternalErrorBoundary({ error: errorArg }: Route.ErrorBoundaryProps) {
       lastPostTimeRef.current = Date.now();
       window.parent.postMessage({ type: 'sandbox:error:detected', error: serialized }, '*');
     };
-
     if (timeSinceLastPost < THROTTLE_MS) {
       const timer = setTimeout(post, THROTTLE_MS - timeSinceLastPost);
       return () => clearTimeout(timer);
     }
-
     post();
   }, [error]);
 
@@ -113,6 +103,7 @@ function InternalErrorBoundary({ error: errorArg }: Route.ErrorBoundaryProps) {
     const animateTimer = setTimeout(() => setIsOpen(true), 100);
     return () => clearTimeout(animateTimer);
   }, []);
+
   const { buttonProps: copyButtonProps } = useButton(
     {
       onPress: useCallback(() => {
@@ -170,6 +161,7 @@ function InternalErrorBoundary({ error: errorArg }: Route.ErrorBoundaryProps) {
       return true;
     }
   }
+
   return (
     <>
       {!isInIframe() && (
@@ -196,7 +188,6 @@ function InternalErrorBoundary({ error: errorArg }: Route.ErrorBoundaryProps) {
                   <span className="text-black text-[1.125rem] leading-none">!</span>
                 </div>
               </div>
-
               <div className="flex flex-col gap-2 flex-1">
                 <div className="flex flex-col gap-1">
                   <p className="font-light text-[#F2F2F2] text-sm">App Error Detected</p>
@@ -204,7 +195,6 @@ function InternalErrorBoundary({ error: errorArg }: Route.ErrorBoundaryProps) {
                     It looks like an error occurred while trying to use your app.
                   </p>
                 </div>
-
                 <button
                   className={`flex flex-row items-center justify-center gap-[4px] outline-none transition-colors rounded-[8px] border-[1px] bg-[#2C2D2F] hover:bg-[#414243] active:bg-[#555658] border-[#414243] text-white ${copyButtonTextClass} ${copyButtonPaddingClass} w-fit`}
                   type="button"
@@ -261,11 +251,6 @@ export const ClientOnly: React.FC<ClientOnlyProps> = ({ loader }) => {
     setIsMounted(true);
   }, []);
 
-  // ErrorBoundaryWrapper sits outside the isMounted gate so it commits on
-  // the first (empty) render and is a stable ancestor by the time children
-  // mount. Catastrophic errors (e.g. stack overflow in user code) can blow
-  // the call stack before React commits a boundary mounted in the same pass
-  // as the throwing child; keeping the boundary always-mounted avoids that.
   return (
     <ErrorBoundaryWrapper>
       {isMounted ? <LoaderWrapper loader={loader} /> : null}
@@ -273,33 +258,17 @@ export const ClientOnly: React.FC<ClientOnlyProps> = ({ loader }) => {
   );
 };
 
-/**
- * useHmrConnection()
- * ------------------
- * • `true`  → HMR socket is healthy
- * • `false` → socket lost (Vite is polling / may auto‑reload soon)
- *
- * Works only in dev; in prod it always returns `true`.
- */
 export function useHmrConnection(): boolean {
   const [connected, setConnected] = useState(() => !!import.meta.hot);
 
   useEffect(() => {
-    // No HMR object outside dev builds
     if (!import.meta.hot) return;
-
-    /** Fired the moment the WS closes unexpectedly */
     const onDisconnect = () => setConnected(false);
-    /** Fired every time the WS (re‑)opens */
     const onConnect = () => setConnected(true);
-
     import.meta.hot.on('vite:ws:disconnect', onDisconnect);
     import.meta.hot.on('vite:ws:connect', onConnect);
-
-    // Optional: catch the “about to full‑reload” event as a last resort
     const onFullReload = () => setConnected(false);
     import.meta.hot.on('vite:beforeFullReload', onFullReload);
-
     return () => {
       import.meta.hot?.off('vite:ws:disconnect', onDisconnect);
       import.meta.hot?.off('vite:ws:connect', onConnect);
@@ -325,8 +294,6 @@ const useHandshakeParent = () => {
       }
     };
     window.addEventListener('message', handleMessage);
-    // Immediately respond to the parent window with a healthy response in
-    // case we missed the healthcheck message
     window.parent.postMessage(healthyResponse, '*');
     return () => {
       window.removeEventListener('message', handleMessage);
@@ -336,9 +303,7 @@ const useHandshakeParent = () => {
 
 const waitForScreenshotReady = async () => {
   const images = Array.from(document.images);
-
   await Promise.all([
-    // make sure custom fonts are loaded
     'fonts' in document ? document.fonts.ready : Promise.resolve(),
     ...images.map(
       (img) =>
@@ -353,8 +318,6 @@ const waitForScreenshotReady = async () => {
         })
     ),
   ]);
-
-  // small buffer to ensure rendering is stable
   await new Promise((resolve) => setTimeout(resolve, 250));
 };
 
@@ -364,25 +327,20 @@ export const useHandleScreenshotRequest = () => {
       if (event.data.type === 'sandbox:web:screenshot:request') {
         try {
           await waitForScreenshotReady();
-
           const width = window.innerWidth;
           const aspectRatio = 16 / 9;
           const height = Math.floor(width / aspectRatio);
-
-          // html-to-image already handles CORS, fonts, and CSS inlining
           const dataUrl = await toPng(document.body, {
             cacheBust: true,
             skipFonts: false,
             width,
             height,
             style: {
-              // force snapshot sizing
               width: `${width}px`,
               height: `${height}px`,
               margin: '0',
             },
           });
-
           window.parent.postMessage({ type: 'sandbox:web:screenshot:response', dataUrl }, '*');
         } catch (error) {
           window.parent.postMessage(
@@ -395,13 +353,13 @@ export const useHandleScreenshotRequest = () => {
         }
       }
     };
-
     window.addEventListener('message', handleMessage);
     return () => {
       window.removeEventListener('message', handleMessage);
     };
   }, []);
 };
+
 export function Layout({ children }: { children: ReactNode }) {
   useHandshakeParent();
   useHandleScreenshotRequest();
@@ -410,6 +368,7 @@ export function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const pathname = location?.pathname;
   const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event.data.type === 'sandbox:navigation') {
@@ -425,15 +384,10 @@ export function Layout({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (pathname) {
-      window.parent.postMessage(
-        {
-          type: 'sandbox:web:navigation',
-          pathname,
-        },
-        '*'
-      );
+      window.parent.postMessage({ type: 'sandbox:web:navigation', pathname }, '*');
     }
   }, [pathname]);
+
   return (
     <html lang="en">
       <head>
@@ -454,6 +408,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <meta name="twitter:image" content="https://coolieo-portfolio.vercel.app/og-image.png" />
         <meta name="theme-color" content="#6366F1" />
         <meta name="robots" content="index, follow" />
+        <meta name="google-site-verification" content="udL4cHcjF73VxStv-zzl6IjIM65LRg1taDKUnLUOC-0" />
         <link rel="canonical" href="https://coolieo-portfolio.vercel.app" />
         <title>Coolieo Giovanni Bowley | Full-Stack Developer Portfolio</title>
         <Meta />
