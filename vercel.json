@@ -2,5 +2,18 @@
   "buildCommand": "npm install --legacy-peer-deps --prefix apps/web && npm run build --prefix apps/web",
   "installCommand": "npm install --legacy-peer-deps --prefix apps/web",
   "framework": null,
-  "outputDirectory": "apps/web/build/client"
+  "outputDirectory": "apps/web/build/client",
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://coolieo-portfolio-ri1v.vercel.app/$1",
+      "permanent": true,
+      "has": [
+        {
+          "type": "host",
+          "value": "coolieo-portfolio.vercel.app"
+        }
+      ]
+    }
+  ]
 }
